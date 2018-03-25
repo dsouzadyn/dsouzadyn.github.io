@@ -5,6 +5,6 @@ title: About
 
 Hello.
 
-This will be your About page. Anything about you, it should be written here in details. You may describe your bio here like who you are, what you do, your intention, social site hyperlinks and how people can contact you, etc.
+This is my tiny blog. Mostly tech related stuff. I like to tinker around with code a lot. Wanna have a chat? Find me on [twitter](https://twitter.com/@laptop64) and [instagram](https://instagram.com/_dsouzadyn). I am a big fan of minimal design. Love to read too.
 
 **Less is more..**
