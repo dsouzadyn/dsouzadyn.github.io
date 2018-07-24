@@ -1,15 +1,7 @@
-# Site Info
 title:              "Dylan Dsouza"
 description:        "To code or not to code?"
-google_verify:      PPT4DOT9BCWB--ncIdgSgD7XWDXnAuo61dF4oF9Rv7k # Put your Google Verification here
-google_analytics:   UA-46725266-1  # Put your Google Analytics code
-
-# Author Info
 author_name:        "Dylan Dsouza" # Your name here
-author_email:       dsouzadyn@gmail.com # Your email here
-author_gravatar:    a0d35ad38ba2e9bbbed8ee9e49fd7ed7 # Your Gravatar md5 hash here for logo
-twitter_username:   laptop64 # Your Twitter username here
-github_username:    dsouzadyn # Your GitHub username here
+logo_url:           https://avatars1.githubusercontent.com/u/5621469?v=4
 
 # Site Settings
 url:                https://dsouzadyn.github.io # main url
@@ -28,8 +20,8 @@ sass:
 
 # Other Params
 include:            [ "robots.txt" ]
-exclude:            [ "LICENSE", "README.md", "CNAME", "vendor", "Gemfile" ]
-gems:
+exclude:            [ "LICENSE", "README.md", "CNAME", "vendor", "Gemfile", "script" ]
+plugins:
   - jekyll-sitemap
 
 
