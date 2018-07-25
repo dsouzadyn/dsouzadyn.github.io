@@ -1,19 +1,19 @@
 ---
 title: Protostar Writeup - stack0
-updated: 2018-07-24 21:00
+updated: 2018-07-25 13:25
 ---
 
 ## Protostar - stack0
 
 This post is a writeup for the Protostack - stack0 challenge. Before continuing further, I strongly advice that you first try them out yourself.
-Here's the [link](https://exploit-exercises.com/protostar/stack0/). The first challenge is simple for a person doing CTF's for a while. This challenge is actually mean't for beginners inorder to introduce them to CTF's.
+Here's the [link](https://exploit-exercises.com/protostar/stack0/). The first challenge is simple for a person doing CTF's for a while. This challenge is actually meant for beginners inorder to introduce them to CTF's.
 I assume that if you got stuck here, you atleast have a VM running the Protostart iso, if not that's a good first challenge if you have never used VM's.
 
 ### stack0
 
 If you read the description of the challenge you will see that all we have to do is modify a variable. Here's the attached code which is also present on the site.
 
-```C
+```c
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -42,7 +42,7 @@ Now what options do we have? The only attack surface I could think of here is th
 hmmm...interesting. Exploiting this has something to do with how memory is layed out. To keep things simple, when we declare a variable, it is reserved or stored on the stack. So if you understood what that means, buffer as well as modified should be on the stack.
 And from the man pages we know that `gets()` has no limit on reading. So what happens if we read beyond 64 bytes? Let's try writing beyond 64 bytes. Let's fire up the GDB and take a look at what we have.
 
-```Shell
+```shell
 $ gdb stack0
 (gdb) set disassembly-flavor intel
 (gdb) disass main
@@ -71,7 +71,7 @@ End of assembler dump.
 Nothing interesting here. We know that `[esp+0x5c]` is the modified variable just by looking at the assembly, since a 0 is moved into that location.
 Let's set a break point just after the `gets()` call, run the program and take a look at what happens.
 
-```Shell
+```shell
 (gdb) break *0x08048411
 Breakpoint 1 at 0x8048411: file stack0/stack0.c, line 13.
 (gdb) r
@@ -94,7 +94,7 @@ We print the first 24 (w)ords in he(x) format. You can see where our 'A's got st
 So what we need to do is overflow the input into the modified variable and we're done. Just by observation of the stack, we see that we require a minimum of 4 * 4 * 4 + 1 bytes of data, which is co-incidently one more byte than the buffer size. More would work too, but this is the minimum.
 Let's write exploit this with a little help from python and pipes.
 
-```Shell
+```shell
 $ python -c "print 'A' * 64 + 'B'" | ./stack0
 you have changed the 'modified' variable
 ```
