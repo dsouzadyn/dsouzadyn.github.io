@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 
 We need to some how get the value from buffer into the `modified` variable. So this is a standard stack overflow attack.
 Now the question is how do we overflow the stack? The `strcpy()` method looks like the only thing we can exploit.
-So lets take a look at the man pages. We find what we're and we don't have to look far.
+So lets take a look at the man pages. We find what we're looking for and we don't have to look far.
 
 > Beware of buffer overruns!
 
