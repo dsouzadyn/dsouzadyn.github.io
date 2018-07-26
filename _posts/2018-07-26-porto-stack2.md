@@ -66,4 +66,7 @@ you have correctly modified the variable
 That was simple, since we had some intuition from the previous exercises. That's why the Protostar challenge is a good place to start.
 Everything is organised. So each level depends on knowledge obtained in the previous levels.
 
+### Sites
 
+[Protostar](https://exploit-exercises.com/protostar/)
+[Phrack](http://phrack.org/issues/49/14.html)
