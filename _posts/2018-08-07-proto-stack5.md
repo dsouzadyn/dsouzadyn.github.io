@@ -83,7 +83,7 @@ Program received signal SIGSEGV, Segmentation fault.
 0xbffff7f0:	0xbffff828	0x87ea710a	0xadbd671a	0x00000000
 0xbffff800:	0x00000000	0x00000000	0x00000001	0x08048310
 ```
-We can probably choose anyone of these addresses, let's try the first one `0x0xbffff7b0`.
+We can probably choose anyone of these addresses, let's try the first one `0xbffff7b0`.
 Below is the exploit script code.
 
 ```python
