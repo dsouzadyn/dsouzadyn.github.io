@@ -76,7 +76,7 @@ Mapped address spaces:
         0xbffeb000 0xc0000000    0x15000          0           [stack]
 ```
 
-As we can see from the map above since we're restricted from returning to libc. This is apparent from the `0xb00000000` check in the C code.
+As we can see from the map above, we're restricted from returning to libc. This is apparent from the `0xb00000000` check in the C code.
 So how can we counter this? After digging a bit, I came across ret2code. Basically you make use of addresses of the binary itself.
 From the map above it's clear that we can do so. But what do we do? That is the question. From the previous write up we know that we can
 fake a stack frame and gain a root shell. Can we do that here somehow?
