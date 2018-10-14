@@ -88,7 +88,7 @@ ROP gadgets(pretty cool eh?).
 
 Here's what a standard calling convention looks like taken from [here](https://en.wikipedia.org/wiki/X86_calling_conventions#Caller_clean-up).:
 
-```assembly
+```nasm
 caller:
         ; make new call frame (some compilers may produce an 'enter' instruction instead)
         push    ebp       ; save old call frame
