@@ -6,7 +6,7 @@ updated: 2018-10-14 16:30
 ## Protostar - stack7
 
 Let's move on to the next level of Protostar. This is similar to the previous challenge.
-Let's take a look at he code and see what differences are present.
+Let's take a look at the code and see what differences are present.
 
 ```c
 
