@@ -5,7 +5,7 @@ updated: 2018-10-09 21:45
 
 ## Protostar - stack6
 
-Moving on to the next challenge. Here's where things get interesting. This challenge is actually based on a security mechanism(not really but similar), it basically won't execute anything on the stack, so how the f*** do we exploit this sucker? First have a look at the code:
+Moving on to the next challenge. Here's where things get interesting. This challenge is actually based on a security mechanism(not really but similar), it basically won't execute anything on the stack, so how do we exploit this binary? First have a look at the code:
 
 ```c
 #include <stdlib.h>
