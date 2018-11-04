@@ -4,7 +4,7 @@ author_name:        "Dylan Dsouza" # Your name here
 logo_url:           https://avatars1.githubusercontent.com/u/5621469?v=4
 
 # Site Settings
-url:                http://dylandsouza.tech # main url
+url:                https://dylandsouza.tech # main url
 baseurl:            / # for gh-pages
 permalink:          /notes/:title # Post permalink
 timezone:           Asia/Kolkata # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
