@@ -5,7 +5,7 @@ updated: 2018-11-22 13:00
 
 ## Format strings
 
-Format strings are used in may languages to specify the type of output.
+Format strings are used in many languages to specify the type of output.
 These types can range from strings, integers all the way up to pointers.
 
 Some examples:
@@ -19,7 +19,7 @@ Although harmless when used in the intended fashion, these strings can be extrem
 
 ## What the leak!
 
-A couple of months ago when I was tackling the format exercises of protostar I came across format string vulnerabilities. The basic idea is that an attacker is able to leak information using format strings.
+A couple of months ago when I was tackling the format exercises of protostar I came across format string vulnerabilities. The basic idea is that an attacker is able to leak information using format strings. These vulnerabilities are specific to the C language.
 
 Let's take a look at a normal C program.
 
