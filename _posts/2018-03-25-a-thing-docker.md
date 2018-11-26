@@ -2,6 +2,7 @@
 layout: post
 title: A thing or two about Docker
 updated: 2018-03-25 17:37
+tags: [docker, howto, tech]
 ---
 
 ## Deployment: A pain in itself
