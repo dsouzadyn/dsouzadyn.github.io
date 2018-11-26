@@ -1,6 +1,8 @@
 ---
+layout: post
 title: Protostar Writeup - stack6
 updated: 2018-10-09 21:45
+tags: [ctf, tech, binary exploit, protostar]
 ---
 
 ## Protostar - stack6

@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Protostar Writeup - stack0
 updated: 2018-07-25 13:25
 tags: [ctf, binary exploit, tech, protostar]

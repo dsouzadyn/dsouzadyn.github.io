@@ -1,15 +1,17 @@
 ---
+layout: post
 title: Protostar Writeup - stack2
 updated: 2018-07-26 21:00
+tags: [ctf, binary exploit, protostar, tech]
 ---
 
 ## Protostar - stack2
 
 The aim of this challenge is to again change the modified variable, except that this one has a slight change.
-We need to set an environment variable called `GREENIE`, whose value will be copied into buffer using the `strcpy()` method.
+We need to set an environment variable called "GREENIE", whose value will be copied into buffer using the "strcpy()" method.
 Here's the code:
 
-```c
+{% highlight c %}
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -38,30 +40,30 @@ int main(int argc, char **argv)
     }
 
 }
-```
+{% endhighlight %}
 
-We need to some how get the value from buffer into the `modified` variable. So this is a standard stack overflow attack.
-Now the question is how do we overflow the stack? The `strcpy()` method looks like the only thing we can exploit.
+We need to some how get the value from buffer into the "modified" variable. So this is a standard stack overflow attack.
+Now the question is how do we overflow the stack? The "strcpy()" method looks like the only thing we can exploit.
 So lets take a look at the man pages. We find what we're looking for and we don't have to look far.
 
 > Beware of buffer overruns!
 
 This confirms that we will be exploiting this method. First things first. We need the buffer length.
-From the code we see that it's 64 bytes, something familiar we've seen in the [previous]() problem.
-Our padding is therefore 64 bytes and another thing is the value which we need to set. This is `0x0d0a0d0a`.
+From the code we see that it's 64 bytes, something familiar we've seen in the previous problem.
+Our padding is therefore 64 bytes and another thing is the value which we need to set. This is "0x0d0a0d0a".
 Keep in mind that this will have to be written in the little endian format.
 Here's what our environment variable will look like.
 
-```shell
+{% highlight shell %}
 $ export GREENIE=$(python -c "print 'A' * 64 + '\x0a\x0d\x0a\x0d'")
-```
+{% endhighlight %}
 
 After setting the environment variable, let's check whether it works.
 
-```shell
+{% highlight shell %}
 $ ./stack2
 you have correctly modified the variable
-```
+{% endhighlight %}
 
 That was simple, since we had some intuition from the previous exercises. That's why the Protostar challenge is a good place to start.
 Everything is organised. So each level depends on knowledge obtained in the previous levels.
