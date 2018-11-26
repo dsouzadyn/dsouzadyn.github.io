@@ -1,6 +1,8 @@
 ---
+layout: post
 title: Hello World
 updated: 2018-03-25 14:17
+tags: [about, me]
 ---
 
 ## Hello world
