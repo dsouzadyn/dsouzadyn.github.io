@@ -2,6 +2,7 @@
 layout: post
 title: Fromat String Vulnerabilities
 updated: 2018-11-22 13:00
+image: format_vuln.png
 tags: [ctf, binary exploit, tech]
 ---
 
