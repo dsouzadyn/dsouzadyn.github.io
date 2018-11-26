@@ -163,7 +163,7 @@ def go():
 	print offset + address + nopslide + shellcode
 
 go()
-{% end highlight %}
+{% endhighlight %}
 
 Let's run it:
 
