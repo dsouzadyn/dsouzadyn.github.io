@@ -58,9 +58,6 @@ include:
 sass:
   sass_dir: _sass
   style: compressed
-
-highlighter: rouge
-
 #-------------------------------
 # Exclude from processing.
 # exclude:
