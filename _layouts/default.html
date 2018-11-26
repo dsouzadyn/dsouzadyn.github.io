@@ -1,29 +1,21 @@
----
-layout: compress
-published: true
----
-
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		{% include head.html %}
-	</head>
+{% include head.html %}
 
-	<body>
+<body>
 
-		
-		<!-- Google Tag Manager (noscript) -->
-		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P23W9F6"height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-		<!-- End Google Tag Manager (noscript) -->
-		{% include header.html %}
+  {% if site.google-analytics %}
+    {% include google-analytics.html %}
+  {% endif %}
+  {% include loader.html %}
+  {% include header.html %}
 
-		<div id="content">
-			{{ content }}
-		</div>
+      {{ content }}
 
-		{% include footer.html %}
+  {% include footer.html %}
+  {% include javascripts.html %}
 
-	</body>
+</body>
 
 </html>

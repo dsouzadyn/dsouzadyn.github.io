@@ -1,60 +1,170 @@
-# The Plain
+Galada - Easy & Simple Theme for Personal Blog
+======
+Galada is an easy and simple theme for Jekyll. Dark colors, give it a special exquisite look. A careful approach to design and features make it an ideal solution for a personal blog.
 
-> The Plain is a minimalist Jekyll theme, ideally designed for your personal blog use. This Jekyll theme provides a minimum distraction so you can focus on writing that matters to you and your readers. This theme is originally inspired from [Leonard Lamprecht's _leo_ theme](https://github.com/leo/leo.github.io).
+* * *
 
-[![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) ![GENERATOR](https://img.shields.io/badge/made_with-jekyll-blue.svg) ![VERSION](https://img.shields.io/badge/current_version-4.0-green.svg) ![TRAVIS-CI](https://travis-ci.org/heiswayi/the-plain.svg?branch=master)
+Table of Contents
+-----------------
+*   [Features](#features)
+*   [Demo](#demo)
+*   [Deployment](#deployment)
+*   [Posts](#posts)
+*   [Disqus Comments](#DisqusComments)
+*   [Instagram](#instagram)
+*   [Google Analytics](#GoogleAnalytics)
+*   [Update favicon](#UpdateFavicon)
+*   [Credits](#Credits)
+*   [Support](#Support)
 
-- **Demo:** https://heiswayi.github.io/the-plain/
+* * *
 
-![SCREENSHOT](https://i.imgur.com/FITKN1H.png)
+### Features
 
-## Usage
+* 100% responsive and clean theme
 
-### On an unlimited Jekyll host
+* Optimized for mobile devices
 
-> **NOTE** This does NOT work on GitHub, see the next section.
+* Minimal design
 
-Put this in your *Gemfile*:
+* Valid HTML5 code
 
-	gem 'the-plain'
+* Post sharing
 
-and run `bundle install` to install the plugin.
+* Subscription form
 
-Add this to your sites *_config.yml* file:
+* Supports Disqus Comments
 
-	theme: the-plain
+* Instagram Feed
 
-Then copy some of the settings from this repo's *_config.yml* file to your own, and modify them.
+* Ionicons Icons
 
-### On GitHub
+* Google Fonts
 
-GitHub - for your user account pages or repository gh-pages - only supports a limited set of themes.
 
-Therefore, you need to use the 'remote\_theme:' setting instead of 'theme:', which is supported by [a 3rd party plugin](https://github.com/benbalter/jekyll-remote-theme).
+* * *
 
-Put this in your *Gemfile*:
+### Demo
 
-	gem 'jekyll-remote-theme'
+Check the theme in action [Demo](https://artemsheludko.github.io/galada/)
 
-and run `bundle install` to install the plugin.
+![Main page preview](https://github.com/artemsheludko/galada/blob/master/img/galada-main-page.jpg?raw=true)
 
-Add the following to your site's *_config.yml* to activate the plugin and to select this theme:
+The post page would look like this:
 
-	plugins:
-	  - jekyll-remote-theme
+![Post page preview](https://github.com/artemsheludko/galada/blob/master/img/galada-post.jpg?raw=true)
 
-	remote_theme: heiswayi/the-plain
+* * *
 
-This will grab the theme directly from the GitHub repo.
+### Deployment
 
-Now copy some of the settings from this repo's *_config.yml* file to your own, and modify them.
+To run the theme locally, navigate to the theme directory and run `bundle install` to install the dependencies, then run `jekyll serve` or `bundle exec jekyll serve` to start the Jekyll server.
 
-## Authors
+I would recommend checking the [Deployment Methods](https://jekyllrb.com/docs/deployment-methods/) page on Jekyll website.
 
-- [**Heiswayi Nrird**](https://heiswayi.nrird.com)
+* * *
 
-See also the list of [contributors](https://github.com/heiswayi/the-plain/graphs/contributors) who participated in this project.
+### Posts
 
-## License
+To create a new post, you can create a new markdown file inside the \_posts directory by following the [recommended file structure](https://jekyllrb.com/docs/posts/#creating-post-files).
 
-[MIT](LICENSE)
+      ---
+      layout: post
+      title: Premiere on Broadway
+      date: 2018-08-23 16:04:00 +0300
+      image: 03.jpg
+      tags: [Rest]
+      ---
+          
+
+You can set the tags and the post image.
+
+Add post images to **/img/** directory.
+
+For tags, try to not add space between two words, for example, `Ruby on Rails`, could be something like (`ruby-on-rails`, `Ruby_on_Rails`, or `Ruby-on-Rails`).
+
+* * *
+
+### Disqus Comments
+
+Galada Theme comes with Disqus comments enabled.
+
+Open `_config.yml` file, and change the `mr-brown` value on line 26 with your [Disqus account shortname](https://help.disqus.com/customer/portal/articles/466208).
+
+      Comment Section (Disqus)
+      disqus-identifier: mr-brown \# Add your shortname for Disqus Comment. For example mr-brown
+          
+
+That’s all you need to setup Disqus from the theme side. If you get any issue regarding that comments are unable to load. First, make sure you have [registered your website with Disqus (Step 1)](https://help.disqus.com/customer/portal/articles/466182-publisher-quick-start-guide).
+
+And also check [Disqus troubleshooting guide](https://help.disqus.com/customer/portal/articles/472007-i-m-receiving-the-message-%22we-were-unable-to-load-disqus-%22) if you still have issues.
+
+* * *
+
+### Instagram
+
+The Instagram feed is working using [Instafeed.js](http://instafeedjs.com/) to show the photos.
+
+First, you will need to get your account `userId` and `accessToken` from the following URLs:
+
+*   userId: [smashballoon.com/instagram-feed/find-instagram-user-id](https://smashballoon.com/instagram-feed/find-instagram-user-id/)
+*   accessToken: [instagram.pixelunion.net](http://instagram.pixelunion.net/)
+
+Second, open the `js/common.js` file and replace the `userId` and `accessToken` values.
+
+            var instagramFeed = new Instafeed({
+              get: 'user',
+              limit: 6,
+              resolution: 'standard_resolution',
+              userId: '8987997106',
+              accessToken: '8987997106.924f677.8555ecbd52584f41b9b22ec1a16dafb9',
+              template: ''
+            });
+          
+
+Third, open the `_config.yml` file and replace the `instafeed: false` on `instafeed: true` value.
+
+            \# Instagram Feed
+            instafeed: false \# To enable the instafeed, use the value true. To turn off use the value false.
+          
+
+* * *
+
+### Google Analytics
+
+To integrate Google Analytics, open `_config.yml`, and add your Google Analytics identifier.
+
+    \# Google Analytics
+    google-analytics: \# Add your identifier. For example UA-99631805-1
+          
+
+* * *
+
+### Update favicon
+
+You can find the current favicon (favicon.ico) inside the theme root directory, just replace it with your new favicon.
+
+* * *
+
+### Credits
+
+I have used the following scripts, fonts or other files as listed.
+
+*   [Google Fonts](https://fonts.google.com/specimen/Nunito) (Nunito, Sans Serif).
+*   [Ionicons Icons](https://ionicons.com/)
+*   [FitVids.js](http://fitvidsjs.com/)
+*   [Instafeed.js](http://instafeedjs.com/)
+*   [jQuery.com](https://jquery.com/)
+*   [Wait For Images](https://github.com/alexanderdickson/waitForImages)
+*   Preview Images form [unsplash.com](https://unsplash.com/), [pexels.com](https://www.pexels.com/)
+
+* * *
+### License
+
+Mit License
+
+* * *
+
+### Support
+<p>If you want to show your appreciation, buy me one <a href="https://www.buymeacoffee.com/artemsheludko" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a> Either way, your support is a way to thank me ❤️</p>
+<p align="center"><b>Thank you for your support!</b></p>

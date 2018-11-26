@@ -1,44 +1,72 @@
-title:              "Dylan Dsouza"
-description:        "To code or not to code?"
-author_name:        "Dylan Dsouza" # Your name here
-logo_url:           https://avatars1.githubusercontent.com/u/5621469?v=4
+#-------------------------------
+# General Site Settings
 
-# Site Settings
-url:                https://dylandsouza.tech # main url
-baseurl:            / # for gh-pages
-permalink:          /notes/:title # Post permalink
-timezone:           Asia/Kolkata # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-mathjax:            true  # enables support for mathjax - set to false to disable
+title: Dylan Dsouza | Dev Blogger
+description: Developer and CTF player, likes to create tiny tools to make life easier.
+baseurl: "/" # the subpath of your site, e.g. /blog
+url: "https://dylandsouza.tech" # the base hostname & protocol for your site, e.g. http://example.com
 
-# Site Build
-highlighter:        rouge
-markdown:           kramdown
-kramdown:
-    input:          GFM
-sass:
-    style:          :compressed
 
-# Other Params
-include:            [ "robots.txt" ]
-exclude:            [ "LICENSE", "README.md", "CNAME", "vendor", "Gemfile", "script" ]
+#-------------------------------
+# About Section
+author-name:   Dylan Dsouza
+author-avatar: 09.jpg
+
+
+#-------------------------------
+# Contact links
+facebook:  false #https://facebook.com/ # Add your Facebook handle
+twitter:   false #https://twitter.com/ # Add your Facebook handle
+instagram: false #https://www.instagram.com/ # Add your Facebook handle
+pinterest: false #https://www.pinterest.com/ # Add your Facebook handle
+
+
+#-------------------------------
+# Comment Section (Disqus)
+disqus-identifier: dylandsouza-tech # Add your shortname for Disqus Comment. For example mr-brown
+
+
+#-------------------------------
+# Instagram Feed
+instafeed: false # To enable the instafeed, use the value true. To turn off use the value false.
+
+
+#-------------------------------
+# Google Analytics
+google-analytics: UA-46725266-4 # Add your identifier. For example UA-99631805-1.
+
+
+#-------------------------------
+# Newsletter
+mailchimp: false # Add your MailChimp form identifier. For example - blogenjoyfreedom.us16.list-manage.com/subscribe/post?u=cd56155d76ddeeb4c0bc4d080&amp;id=7a526cd13e
+
+
+#-------------------------------
+# Build settings
+markdown: kramdown
+permalink: ':title/'
 plugins:
+  - jekyll-paginate
   - jekyll-sitemap
 
+paginate: 7
+paginate_path: "/page/:num"
+
+include:
+  - _pages
+
+sass:
+  sass_dir: _sass
+  style: compressed
 
 
-defaults:
-  -
-    scope:
-      path:         ""
-    values:
-      layout:       "null"
-  -
-    scope:
-      type:         "pages"
-    values:
-      layout:       "page"
-  -
-    scope:
-      type:         "posts"
-    values:
-      layout:       "post"
+#-------------------------------
+# Exclude from processing.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
