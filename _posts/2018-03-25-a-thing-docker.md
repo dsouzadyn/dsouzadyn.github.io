@@ -1,4 +1,5 @@
 ---
+layout: post
 title: A thing or two about Docker
 updated: 2018-03-25 17:37
 ---
@@ -21,12 +22,12 @@ A VM on the other hand is an abstraction of physical hardware. This creates a co
 
 Docker compose is a tool from docker for defining and running multi-container Docker applications. For example I have a website for showing me curated fine dining. Let's think about what all we need to create the website. First off a web server, then a database, maybe also an external session storage. For each of these entities I can create a container and then tie them together. Docker compose allows me to define and tie containers together in a docker compose file which is of YAML format. Using compose takes 3 steps:
 1. Create a Dockerfile to create the environment of your choice(Usually this step is rarely done as a lot of pre-made images already exist)
-2. ```docker-compose.yml``` file for defining all the services which your application requires
-3. ```docker-compose up``` command to create it.
+2. docker-compose.yml file for defining all the services which your application requires
+3. docker-compose up command to create it.
 That's how simple it is.
 
 Here's an example of a Dockerfile
-```
+{% highlight plaintext %}
 #
 # Simple example of a Dockerfile
 #
@@ -40,11 +41,11 @@ RUN pip install Flask
 ADD hello.py /home/hello.py
 
 WORKDIR /home
-```
+{% endhighlight %}
 
-And here is an example of a ```docker-compose.yml``` file.
+And here is an example of a docker-compose.yml file.
 
-```yaml
+{% highlight yaml %}
 version: '2'
 
 services:
@@ -56,14 +57,14 @@ services:
      - .:/code
   redis:
     image: redis
-```
+{% endhighlight %}
 
 ## The situation today
 
 Containers are the future. A lot of companies have adopted this method of deployment as it is much easier and give's the developer full control over his/her application. One major factor is the reduction of hosting costs. Containers make the whole dev-ops business a whole lot transparent and the developer community likes that. Containers are here to stay, until another ground breaking technology comes along. It's safe to say that won't happen for quite some time.
 
 ### Refences
-[^1] [https://www.docker.com/what-docker](https://www.docker.com/what-docker)
-[^2] [https://docs.docker.com/compose/](https://docs.docker.com/compose/)
-[^3] [https://www.docker.com/what-container](https://www.docker.com/what-container)
-[^4] All images taken from [Docker](https://www.docker.com)
+[https://www.docker.com/what-docker](https://www.docker.com/what-docker)
+[https://docs.docker.com/compose/](https://docs.docker.com/compose/)
+[https://www.docker.com/what-container](https://www.docker.com/what-container)
+All images taken from [Docker](https://www.docker.com)
