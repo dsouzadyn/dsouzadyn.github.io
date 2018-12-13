@@ -23,7 +23,7 @@ $ checksec rop
     PIE:      No PIE (0x400000)
 {% endhighlight %}
 
-As NX is enabled we cannot place shellcode to execute on the stack. Instead we can use the stack to point to so called gadets in order to achieve what we want. These gadgets are known as rop gadgets. You can learn more about rop [here](https://www.blackhat.com/presentations/bh-usa-08/Shacham/BH_US_08_Shacham_Return_Oriented_Programming.pdf) and [here](https://www.rapid7.com/resources/rop-exploit-explained/).
+As NX is enabled we cannot place shellcode to execute on the stack. Instead we can use the stack to point to so called rop gadgets in order to achieve what we want. These gadgets are known as rop gadgets. You can learn more about rop [here](https://www.blackhat.com/presentations/bh-usa-08/Shacham/BH_US_08_Shacham_Return_Oriented_Programming.pdf) and [here](https://www.rapid7.com/resources/rop-exploit-explained/).
 
 ### The strat
 
