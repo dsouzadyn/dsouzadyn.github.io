@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Kotlin Basics: Operators and Variables
+title: Kotlin Basics - Operators and Variables
 updated: 2019-04-05 19:30
 image: kotlin_header.png
 tags: [kotlin, jvm, code, howto]
